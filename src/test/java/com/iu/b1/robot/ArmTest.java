@@ -13,16 +13,5 @@ import com.iu.head.Header;
 @SpringBootTest
 class ArmTest {
 
-	@Autowired
-	private Header header;
-	
-	@Resource(name="rightArm")
-	private RightArm rightArm;
-		
-	
-	@Test
-	void test() {
-		assertNotNull(header);
-	}
 
 }
