@@ -11,4 +11,13 @@
   	<select id="memberLogin" parameterType="com.iu.b1.member.MemberVO" resultType="com.iu.b1.member.MemberVO">
   		select * from members where id=#{id} and pw=#{pw}
   	</select>
+  	
+  	<select id="memberMypage" parameterType="com.iu.b1.member.MemberVO" resultType="com.iu.b1.member.MemberVO">
+  		select * from members join memberFiles using(id) where id=#{id}
+  	</select>
+  	
+  	<select id="memberFileDown" parameterType="com.iu.b1.member.MemberFilesVO" resultType="com.iu.b1.member.MemberFilesVO">
+  		select * from memberFiles where fnum = #{fnum}
+  	</select>
+  	
   </mapper>

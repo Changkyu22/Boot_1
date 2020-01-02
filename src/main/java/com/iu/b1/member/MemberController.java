@@ -1,5 +1,7 @@
 package com.iu.b1.member;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,61 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@GetMapping("memberFileDown")
+	public ModelAndView memberFileDown(MemberFilesVO memberFilesVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		memberFilesVO = memberService.memberFilesSelect(memberFilesVO);
+		if(memberFilesVO != null) {
+			mv.addObject("memberfiles", memberFilesVO);
+			mv.addObject("path", "upload");
+			mv.setViewName("fileDown");
+		}else {
+			mv.addObject("message", "No Image");
+			mv.addObject("path", "./memberMypage");
+			mv.setViewName("common/result");
+		}
+		return mv;
+	}
+	
+	@GetMapping("memberMypage")
+	public ModelAndView memberMypage(MemberVO memberVO, HttpSession session) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		memberVO = (MemberVO)session.getAttribute("member");
+		memberVO = memberService.memberMypage(memberVO);
+		mv.addObject("member", memberVO);
+		mv.setViewName("member/memberMypage");
+		
+		return mv;
+	}
+	
+	@GetMapping("memberLogout")
+	public String memberLogout(HttpSession session)throws Exception{
+		session.invalidate();
+		return "redirect:../";
+	}
+	
+	@GetMapping("memberLogin")
+	public String memberLogin()throws Exception{
+		return "member/memberLogin";
+	}
+	
+	@PostMapping("memberLogin")
+	public ModelAndView memberLogin(MemberVO memberVO, HttpSession session) throws Exception{
+		ModelAndView mv= new ModelAndView();
+		memberVO = memberService.memberLogin(memberVO);
+		String message = "Join Fail";
+		String path = "../";
+		if(memberVO!=null) {
+			message = "Join Success";
+			session.setAttribute("member", memberVO);
+		}
+		mv.setViewName("common/result");
+		mv.addObject("message", message);
+		mv.addObject("path", path);
+		
+		return mv;
+	}
 	
 	@GetMapping("memberJoin")
 	public String memberJoin() throws Exception{

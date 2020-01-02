@@ -11,5 +11,6 @@ public interface MemberMapper {
 	
 	public MemberVO memberLogin(MemberVO memberVO)throws Exception;
 	
-
+	public MemberVO memberMypage(MemberVO memberVO)throws Exception;
+	
 }
