@@ -1,9 +1,11 @@
 package com.iu.b1.member;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
 	
 	@GetMapping("memberFileDown")
 	public ModelAndView memberFileDown(MemberFilesVO memberFilesVO) throws Exception{
@@ -73,23 +76,29 @@ public class MemberController {
 	}
 	
 	@GetMapping("memberJoin")
-	public String memberJoin() throws Exception{
+	public String memberJoin(MemberVO memberVO) throws Exception{
+		// MemberVO memberVO = new MemberVO();
+		// model.addAttribute("memberVO", new MemberVO()); 와 같은 것
 		return "member/memberJoin";
 	}
 	
 	@PostMapping("memberJoin")
-	public ModelAndView memberJoin(MemberVO memberVO, MultipartFile files)throws Exception{
+	public ModelAndView memberJoin(@Valid MemberVO memberVO, BindingResult bindingResult, MultipartFile files)throws Exception{
 		ModelAndView mv = new ModelAndView();
-		int result = memberService.memberJoin(memberVO, files);
-		String message = "Join Fail";
-		String path = "../";
-		if(result > 0) {
-			message = "Join Success";
-		}
-		mv.setViewName("common/result");
-		mv.addObject("message", message);
-		mv.addObject("path", path);
 		
+		if(memberService.memberJoinValidate(memberVO, bindingResult)) {
+			mv.setViewName("member/memberJoin");
+		}else {
+			int result = memberService.memberJoin(memberVO, files);
+			String message = "Join Fail";
+			String path = "../";
+			if(result > 0) {
+				message = "Join Success";
+			}
+			mv.setViewName("common/result");
+			mv.addObject("message", message);
+			mv.addObject("path", path);
+		}
 		return mv;
 	}
 }

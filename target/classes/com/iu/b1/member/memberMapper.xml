@@ -20,4 +20,8 @@
   		select * from memberFiles where fnum = #{fnum}
   	</select>
   	
+  	<select id="memberIdCheck" parameterType="com.iu.b1.member.MemberVO" resultType="com.iu.b1.member.MemberVO">
+  		select * from members where id = #{id}
+  	</select>
+  	
   </mapper>

@@ -13,4 +13,6 @@ public interface MemberMapper {
 	
 	public MemberVO memberMypage(MemberVO memberVO)throws Exception;
 	
+	public MemberVO memberIdCheck(MemberVO memberVO)throws Exception;
+	
 }

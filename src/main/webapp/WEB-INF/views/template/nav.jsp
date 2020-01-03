@@ -15,7 +15,7 @@
           <li><a href="#">Page 1-3</a></li>
         </ul>
       </li>
-      <li><a href="#">Page 2</a></li>
+      <li><a href="${PageContext.request.contextPath}/notice/noticeWrite">Notice</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
     <c:if test="${not empty sessionScope.member}">
