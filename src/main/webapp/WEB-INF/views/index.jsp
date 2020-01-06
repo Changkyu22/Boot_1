@@ -25,7 +25,7 @@
 			<spring:message code="hello"></spring:message>
 			<spring:message code="hello2" text="No message" var="t"></spring:message>
 			<c:if test="${not empty member}">
-				<spring:message code="loginMessage" arguments="${member.id}, ${member.email}" argumentSeparator=","></spring:message>
+				<spring:message code="login.Message" arguments="${member.id}, ${member.email}" argumentSeparator=","></spring:message>
 			</c:if>
 		</h1>
 	

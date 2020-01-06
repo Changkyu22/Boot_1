@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<c:import url="../template/boot.jsp" />
 </head>
 <body>
 	<div class="container">
@@ -18,7 +20,7 @@
 	    
 	    <div class="form-group">
 	      <label for="writer">WRITER</label>
-	      <input type="text" class="form-control" id="writer" placeholder="Enter your ID or name" name="writer" value="${dto.writer}">
+	      <input type="text" class="form-control" id="writer" placeholder="Enter the Writer" name="writer" value="${dto.writer}">
 	    </div>
 	    
 	    <div class="form-group">

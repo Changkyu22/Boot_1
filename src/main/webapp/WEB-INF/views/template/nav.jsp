@@ -15,7 +15,9 @@
           <li><a href="#">Page 1-3</a></li>
         </ul>
       </li>
-      <li><a href="${PageContext.request.contextPath}/notice/noticeWrite">Notice</a></li>
+      <c:if test="${sessionScope.member.id eq 'admin'}">
+      	<li><a href="${PageContext.request.contextPath}/notice/noticeWrite">Notice</a></li>
+      </c:if>
     </ul>
     <ul class="nav navbar-nav navbar-right">
     <c:if test="${not empty sessionScope.member}">
