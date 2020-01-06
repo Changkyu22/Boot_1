@@ -7,4 +7,52 @@
 	<insert id="noticeWrite" parameterType="com.iu.b1.notice.NoticeVO" useGeneratedKeys="true" keyProperty="num">
 		insert into notice values(#{num}, #{title}, #{writer}, #{contents}, curdate(), 0)
 	</insert>
+	
+	<select id="noticeList" resultType="com.iu.b1.notice.NoticeVO" parameterType="com.iu.b1.util.Pager">
+		select * from notice 
+		
+		<include refid="searching"></include> and num > 0
+		
+		order by num desc limit #{startRow}, 10
+	</select>
+	
+	<select id="noticeCount" resultType="java.lang.Integer" parameterType="com.iu.b1.util.Pager">
+		select count(num) from notice
+		<include refid="searching"></include>
+	</select>
+	
+	<select id="noticeSelect" parameterType="com.iu.b1.notice.NoticeVO" resultMap="noticeFiles">
+		select N.*, F.fnum, F.fname, F.oname
+		from notice N left join noticeFiles F
+		on N.num = F.num
+		where N.num = #{num}
+	</select>
+	
+	<resultMap type="com.iu.b1.notice.NoticeVO" id="noticeFiles">
+		<id property="num" column="num"/>
+		<result property="title" column="title"/>
+		<result property="writer" column="writer"/>
+		<result property="contents" column="contents"/>
+		<result property="regDate" column="regDate" />
+		<result property="hit" column="hit"/>
+		<collection property="noticeFiles" javaType="java.util.List" ofType="com.iu.b1.notice.NoticeFilesVO">
+			<id property="fnum" column="fnum" />
+			<result property="fname" column="fname" />
+			<result property="oname" column="oname" />
+		</collection>
+	</resultMap>
+	
+	<sql id="searching">
+		<choose>
+			<when test="kind == 'kt'">
+				where title like CONCAT('%',#{search},'%')
+			</when>
+			<when test="kind == 'kw'">
+				where writer like CONCAT('%',#{search},'%')
+			</when>
+			<otherwise>
+				where contents like CONCAT('%',#{search},'%')
+			</otherwise>
+		</choose>
+	</sql>
   </mapper>
