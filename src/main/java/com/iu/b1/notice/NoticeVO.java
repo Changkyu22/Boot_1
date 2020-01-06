@@ -2,15 +2,27 @@ package com.iu.b1.notice;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotEmpty;
+
 public class NoticeVO {
 	
 	private int num;
+	@NotEmpty
 	private String title;
+	@NotEmpty
 	private String writer;
 	private String contents;
 	private Date regDate;
 	private int hit;
+	private NoticeFilesVO noticeFilesVO;
 	
+	
+	public NoticeFilesVO getNoticeFilesVO() {
+		return noticeFilesVO;
+	}
+	public void setNoticeFilesVO(NoticeFilesVO noticeFilesVO) {
+		this.noticeFilesVO = noticeFilesVO;
+	}
 	public int getNum() {
 		return num;
 	}

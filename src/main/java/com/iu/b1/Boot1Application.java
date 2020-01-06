@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
-@EnableScheduling
+//@EnableScheduling
 public class Boot1Application {
 
 	public static void main(String[] args) {

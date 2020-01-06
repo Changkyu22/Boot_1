@@ -16,12 +16,16 @@ public class NoticeInterceptor extends HandlerInterceptorAdapter{
 			throws Exception {
 		
 		MemberVO memberVO = (MemberVO)request.getSession().getAttribute("member");
-		if(memberVO.getId().equals("admin")) {
-			response.sendRedirect("../");
-			return false;
-		}else {
-			return true;
+		
+		if(memberVO != null) {
+			if(memberVO.getId().equals("admin")) {
+				return true;
+			}else {
+				response.sendRedirect("../");
+				return false;
+			}
 		}
+		response.sendRedirect("../");
+		return false;
 	}
-	
 }

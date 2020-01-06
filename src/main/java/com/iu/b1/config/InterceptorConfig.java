@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.iu.b1.interceptor.CustomInterceptor;
 import com.iu.b1.interceptor.MemberInterceptor;
+import com.iu.b1.interceptor.NoticeInterceptor;
 
 @Configuration // xml file
 public class InterceptorConfig implements WebMvcConfigurer{
@@ -17,6 +18,8 @@ public class InterceptorConfig implements WebMvcConfigurer{
 	@Autowired
 	private MemberInterceptor memberInterceptor;
 	
+	@Autowired
+	private NoticeInterceptor noticeInterceptor;
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -26,6 +29,7 @@ public class InterceptorConfig implements WebMvcConfigurer{
 		
 		// Interceptor를 사용할 URL 패턴 등록
 		.addPathPatterns("/member/*")
+		.addPathPatterns("/notice/*")
 		// .addPathPatterns("/member/memberMypage")
 		
 		// 제외할 Interceptor 경로
@@ -34,8 +38,8 @@ public class InterceptorConfig implements WebMvcConfigurer{
 		
 		// WebMvcConfigurer.super.addInterceptors(registry);	생략가능
 		
-		
 		registry.addInterceptor(memberInterceptor).addPathPatterns("/member/memberMypage");
+		registry.addInterceptor(noticeInterceptor).addPathPatterns("/notice/noticeWrite");
 		
 		
 	}
